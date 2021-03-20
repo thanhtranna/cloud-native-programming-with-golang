@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 	"time"
 
@@ -20,6 +21,8 @@ func ServeAPI(listenAddr string, database persistence.DatabaseHandler, eventEmit
 		WriteTimeout: 2 * time.Second,
 		ReadTimeout:  1 * time.Second,
 	}
+
+	log.Println("Server listening on port ", listenAddr)
 
 	srv.ListenAndServe()
 }

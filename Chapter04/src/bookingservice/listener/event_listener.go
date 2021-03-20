@@ -1,13 +1,14 @@
 package listener
 
 import (
-	"cloud-native-programming-with-golang/Chapter04/src/contracts"
-	"cloud-native-programming-with-golang/Chapter04/src/lib/msgqueue"
-	"cloud-native-programming-with-golang/Chapter04/src/lib/persistence"
 	"fmt"
 	"log"
 
 	"gopkg.in/mgo.v2/bson"
+
+	"cloud-native-programming-with-golang/Chapter04/src/contracts"
+	"cloud-native-programming-with-golang/Chapter04/src/lib/msgqueue"
+	"cloud-native-programming-with-golang/Chapter04/src/lib/persistence"
 )
 
 type EventProcessor struct {

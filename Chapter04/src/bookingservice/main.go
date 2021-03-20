@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 
 	"github.com/Shopify/sarama"
 	"github.com/streadway/amqp"
@@ -26,7 +25,7 @@ func main() {
 	var eventListener msgqueue.EventListener
 	var eventEmitter msgqueue.EventEmitter
 
-	confPath := flag.String("conf", "../lib/configuration/config.json", "flag to set the path to the configuration json file")
+	confPath := flag.String("conf", `../lib/configuration/config.json`, "flag to set the path to the configuration json file")
 	flag.Parse()
 
 	//extract configuration
@@ -34,7 +33,6 @@ func main() {
 
 	switch config.MessageBrokerType {
 	case "amqp":
-		fmt.Println(config.AMQPMessageBroker)
 		conn, err := amqp.Dial(config.AMQPMessageBroker)
 		panicIfErr(err)
 

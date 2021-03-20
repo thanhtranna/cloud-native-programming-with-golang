@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"cloud-native-programming-with-golang/Chapter04/src/contracts"
-
 	"github.com/mitchellh/mapstructure"
+
+	"cloud-native-programming-with-golang/Chapter04/src/contracts"
 )
 
 type StaticEventMapper struct{}

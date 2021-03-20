@@ -37,7 +37,7 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	routeVars := mux.Vars(r)
 	eventID, ok := routeVars["eventID"]
 	if !ok {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, "missing route parameter 'eventID'")
 		return
 	}
@@ -45,7 +45,7 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	eventIDMongo, _ := hex.DecodeString(eventID)
 	event, err := h.database.FindEvent(eventIDMongo)
 	if err != nil {
-		w.WriteHeader(404)
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "event %s could not be loaded: %s", eventID, err)
 		return
 	}
@@ -53,13 +53,13 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	bookingRequest := createBookingRequest{}
 	err = json.NewDecoder(r.Body).Decode(&bookingRequest)
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "could not decode JSON body: %s", err)
 		return
 	}
 
 	if bookingRequest.Seats <= 0 {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "seat number must be positive (was %d)", bookingRequest.Seats)
 		return
 	}
