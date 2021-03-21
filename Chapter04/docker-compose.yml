@@ -31,7 +31,7 @@ services:
       - rabbitmq
       - events-db
     environment:
-      - AMQP_BROKER_URL=amqp://admin:admin@rabbitmq:5672/
+      - AMQP_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
       - MONGO_URL=mongodb://events-db/events
     networks:
       - myevents
