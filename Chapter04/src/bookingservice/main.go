@@ -28,7 +28,7 @@ func main() {
 	confPath := flag.String("conf", `../lib/configuration/config.json`, "flag to set the path to the configuration json file")
 	flag.Parse()
 
-	//extract configuration
+	// extract configuration
 	config, _ := configuration.ExtractConfiguration(*confPath)
 
 	switch config.MessageBrokerType {

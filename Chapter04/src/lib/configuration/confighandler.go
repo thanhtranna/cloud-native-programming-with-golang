@@ -14,7 +14,7 @@ var (
 	DBConnectionDefault        = "mongodb://127.0.0.1"
 	RestfulEPDefault           = "localhost:8181"
 	MessageBrokerTypeDefault   = "amqp"
-	AMQPMessageBrokerDefault   = "amqp://guest:guest@localhost:5672"
+	AMQPMessageBrokerDefault   = "amqp://admin:admin@localhost:5672"
 	KafkaMessageBrokersDefault = []string{"localhost:9092"}
 )
 

@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -49,9 +48,8 @@ func (eh *eventServiceHandler) findEventHandler(w http.ResponseWriter, r *http.R
 	case "name":
 		event, err = eh.dbhandler.FindEventByName(searchkey)
 	case "id":
-		id, err := hex.DecodeString(searchkey)
 		if nil == err {
-			event, err = eh.dbhandler.FindEvent(id)
+			event, err = eh.dbhandler.FindEvent(searchkey)
 		}
 	}
 	if err != nil {
@@ -87,8 +85,7 @@ func (eh *eventServiceHandler) oneEventHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	eventIDBytes, _ := hex.DecodeString(eventID)
-	event, err := eh.dbhandler.FindEvent(eventIDBytes)
+	event, err := eh.dbhandler.FindEvent(eventID)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "event with id %s was not found", eventID)
@@ -108,6 +105,7 @@ func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 	id, err := eh.dbhandler.AddEvent(event)
+	fmt.Println("id = ", string(id))
 	if nil != err {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "error occured while persisting event %s", err)
@@ -115,7 +113,7 @@ func (eh *eventServiceHandler) newEventHandler(w http.ResponseWriter, r *http.Re
 	}
 
 	msg := contracts.EventCreatedEvent{
-		ID:         hex.EncodeToString(id),
+		ID:         id,
 		Name:       event.Name,
 		Start:      time.Unix(event.StartDate, 0),
 		End:        time.Unix(event.EndDate, 0),

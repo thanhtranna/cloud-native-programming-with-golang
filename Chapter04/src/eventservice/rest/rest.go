@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -22,6 +23,8 @@ func ServeAPI(endpoint string, dbHandler persistence.DatabaseHandler, eventEmitt
 	locationRouter := r.PathPrefix("/locations").Subrouter()
 	locationRouter.Methods("GET").Path("").HandlerFunc(handler.allLocationsHandler)
 	locationRouter.Methods("POST").Path("").HandlerFunc(handler.newLocationHandler)
+
+	log.Println("Server listening on port ", endpoint)
 
 	return http.ListenAndServe(endpoint, r)
 }

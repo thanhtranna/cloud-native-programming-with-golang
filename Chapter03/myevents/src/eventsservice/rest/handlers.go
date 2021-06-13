@@ -84,11 +84,13 @@ func (eh *eventServiceHandler) NewEventHandler(w http.ResponseWriter, r *http.Re
 		fmt.Fprintf(w, `{"error": "error occured while decoding event data %s"}`, err)
 		return
 	}
+
 	id, err := eh.dbhandler.AddEvent(event)
 	if nil != err {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, `{"error": "error occured while persisting event %d %s"}`, id, err)
+		fmt.Fprintf(w, `{"error": "error occured while persisting event %s %s"}`, id, err)
 		return
 	}
-	fmt.Fprint(w, `{"id":%d}`, id)
+
+	fmt.Fprintf(w, `{"id":%s}`, id)
 }

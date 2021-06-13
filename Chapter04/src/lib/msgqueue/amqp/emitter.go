@@ -57,12 +57,7 @@ func NewAMQPEventEmitter(conn *amqp.Connection, exchange string) (msgqueue.Event
 		exchange:   exchange,
 	}
 
-	err := emitter.setup()
-	if err != nil {
-		return nil, err
-	}
-
-	return &emitter, nil
+	return &emitter, emitter.setup()
 }
 
 func (a *amqpEventEmitter) setup() error {

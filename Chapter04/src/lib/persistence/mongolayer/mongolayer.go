@@ -25,14 +25,14 @@ func NewMongoDBLayer(connection string) (persistence.DatabaseHandler, error) {
 	}, err
 }
 
-func (mgoLayer *MongoDBLayer) AddUser(u persistence.User) ([]byte, error) {
+func (mgoLayer *MongoDBLayer) AddUser(u persistence.User) (string, error) {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 	u.ID = bson.NewObjectId()
-	return []byte(u.ID), s.DB(DB).C(USERS).Insert(u)
+	return u.ID.Hex(), s.DB(DB).C(USERS).Insert(u)
 }
 
-func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) ([]byte, error) {
+func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) (string, error) {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 
@@ -44,7 +44,7 @@ func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) ([]byte, error) {
 		e.Location.ID = bson.NewObjectId()
 	}
 
-	return []byte(e.ID), s.DB(DB).C(EVENTS).Insert(e)
+	return e.ID.Hex(), s.DB(DB).C(EVENTS).Insert(e)
 }
 
 func (mgoLayer *MongoDBLayer) AddLocation(l persistence.Location) (persistence.Location, error) {
@@ -55,22 +55,22 @@ func (mgoLayer *MongoDBLayer) AddLocation(l persistence.Location) (persistence.L
 	return l, err
 }
 
-func (mgoLayer *MongoDBLayer) AddBookingForUser(id []byte, bk persistence.Booking) error {
+func (mgoLayer *MongoDBLayer) AddBookingForUser(id string, bk persistence.Booking) error {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
-	return s.DB(DB).C(USERS).UpdateId(bson.ObjectId(id), bson.M{"$addToSet": bson.M{"bookings": []persistence.Booking{bk}}})
+	return s.DB(DB).C(USERS).UpdateId(bson.ObjectIdHex(id), bson.M{"$addToSet": bson.M{"bookings": []persistence.Booking{bk}}})
 }
 
-func (mgoLayer *MongoDBLayer) FindUser(f string, l string) (persistence.User, error) {
+func (mgoLayer *MongoDBLayer) FindUser(first string, last string) (persistence.User, error) {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 	u := persistence.User{}
-	err := s.DB(DB).C(USERS).Find(bson.M{"first": f, "last": l}).One(&u)
+	err := s.DB(DB).C(USERS).Find(bson.M{"first": first, "last": last}).One(&u)
 	//fmt.Printf("Found %v \n", u.String())
 	return u, err
 }
 
-func (mgoLayer *MongoDBLayer) FindBookingsForUser(id []byte) ([]persistence.Booking, error) {
+func (mgoLayer *MongoDBLayer) FindBookingsForUser(id string) ([]persistence.Booking, error) {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 	u := persistence.User{}
@@ -78,12 +78,12 @@ func (mgoLayer *MongoDBLayer) FindBookingsForUser(id []byte) ([]persistence.Book
 	return u.Bookings, err
 }
 
-func (mgoLayer *MongoDBLayer) FindEvent(id []byte) (persistence.Event, error) {
+func (mgoLayer *MongoDBLayer) FindEvent(id string) (persistence.Event, error) {
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 	e := persistence.Event{}
 
-	err := s.DB(DB).C(EVENTS).FindId(bson.ObjectId(id)).One(&e)
+	err := s.DB(DB).C(EVENTS).FindId(bson.ObjectIdHex(id)).One(&e)
 	return e, err
 }
 

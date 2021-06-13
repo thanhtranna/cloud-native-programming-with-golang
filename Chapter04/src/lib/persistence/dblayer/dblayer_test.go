@@ -12,7 +12,7 @@ import (
 func TestExamineDatabaseCalls(t *testing.T) {
 	events := generateDemoEventData()
 	layer, nil := NewPersistenceLayer(MONGODB, "mongodb://127.0.0.1")
-	eventids := make([][]byte, 2)
+	eventids := make([]string, 2)
 	var err error
 	for i, event := range events {
 		eventids[i], err = layer.AddEvent(event)
@@ -21,7 +21,7 @@ func TestExamineDatabaseCalls(t *testing.T) {
 		}
 	}
 	users := generateDemoUsersData()
-	userids := make([][]byte, 2)
+	userids := make([]string, 2)
 	bookings := generateDemoBookingData(eventids[0], eventids[1])
 	for i, user := range users {
 		userids[i], err = layer.AddUser(user)
@@ -122,7 +122,7 @@ func generateDemoUsersData() []persistence.User {
 	}
 }
 
-func generateDemoBookingData(eventid1, eventid2 []byte) []persistence.Booking {
+func generateDemoBookingData(eventid1, eventid2 string) []persistence.Booking {
 	return []persistence.Booking{
 		persistence.Booking{
 			Date:    time.Now().UnixNano(),
