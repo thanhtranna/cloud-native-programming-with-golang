@@ -55,7 +55,7 @@ func TestExamineDatabaseCalls(t *testing.T) {
 
 func generateDemoEventData() []persistence.Event {
 	return []persistence.Event{
-		persistence.Event{
+		{
 			Name:      "Pink Floyd Concert",
 			Duration:  90,
 			StartDate: time.Now().AddDate(0, -6, 0).UnixNano(),
@@ -67,19 +67,20 @@ func generateDemoEventData() []persistence.Event {
 				OpenTime:  8,
 				CloseTime: 22,
 				Halls: []persistence.Hall{
-					persistence.Hall{
+					{
 						Name:     "Olive West",
 						Location: "Second floor, west wing",
 						Capacity: 80,
 					},
-					persistence.Hall{
+					{
 						Name:     "Golden Leaf",
 						Location: "Third floor",
 						Capacity: 80,
 					},
 				},
 			},
-		}, persistence.Event{
+		},
+		{
 			Name:      "BackStreet boys Concert",
 			Duration:  120,
 			StartDate: time.Now().AddDate(0, -8, 0).UnixNano(),
@@ -91,12 +92,12 @@ func generateDemoEventData() []persistence.Event {
 				OpenTime:  7,
 				CloseTime: 21,
 				Halls: []persistence.Hall{
-					persistence.Hall{
+					{
 						Name:     "Picasso",
 						Location: "First floor",
 						Capacity: 95,
 					},
-					persistence.Hall{
+					{
 						Name:     "Van Gogh",
 						Location: "Third floor",
 						Capacity: 120,
@@ -109,12 +110,12 @@ func generateDemoEventData() []persistence.Event {
 
 func generateDemoUsersData() []persistence.User {
 	return []persistence.User{
-		persistence.User{
+		{
 			First: "Joe",
 			Last:  "Smith",
 			Age:   32,
 		},
-		persistence.User{
+		{
 			First: "Jane",
 			Last:  "Doe",
 			Age:   34,
@@ -124,12 +125,12 @@ func generateDemoUsersData() []persistence.User {
 
 func generateDemoBookingData(eventid1, eventid2 string) []persistence.Booking {
 	return []persistence.Booking{
-		persistence.Booking{
+		{
 			Date:    time.Now().UnixNano(),
 			Seats:   4,
 			EventID: eventid1,
 		},
-		persistence.Booking{
+		{
 			Date:    time.Now().UnixNano(),
 			Seats:   4,
 			EventID: eventid2,

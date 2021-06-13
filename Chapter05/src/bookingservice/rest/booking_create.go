@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -42,8 +41,7 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	eventIDMongo, _ := hex.DecodeString(eventID)
-	event, err := h.database.FindEvent(eventIDMongo)
+	event, err := h.database.FindEvent(eventID)
 	if err != nil {
 		w.WriteHeader(404)
 		fmt.Fprintf(w, "event %s could not be loaded: %s", eventID, err)
@@ -64,10 +62,9 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	eventIDAsBytes, _ := event.ID.MarshalText()
 	booking := persistence.Booking{
 		Date:    time.Now().Unix(),
-		EventID: eventIDAsBytes,
+		EventID: event.ID.Hex(),
 		Seats:   bookingRequest.Seats,
 	}
 
@@ -77,7 +74,7 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	}
 	h.eventEmitter.Emit(&msg)
 
-	h.database.AddBookingForUser([]byte("someUserID"), booking)
+	h.database.AddBookingForUser("someUserID", booking)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)

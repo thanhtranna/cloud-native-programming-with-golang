@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/handlers"
@@ -25,6 +26,8 @@ func ServeAPI(endpoint string, dbHandler persistence.DatabaseHandler, eventEmitt
 	locationRouter.Methods("POST").Path("").HandlerFunc(handler.newLocationHandler)
 
 	server := handlers.CORS()(r)
+
+	log.Println("Server listening on port ", endpoint)
 
 	return http.ListenAndServe(endpoint, server)
 }

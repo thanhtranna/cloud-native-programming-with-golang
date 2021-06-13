@@ -11,11 +11,12 @@ class App extends React.Component<{}, {}> {
     const eventList = () => (
       <EventListContainer eventServiceURL="http://localhost:8181" />
     );
+
     const eventBooking = ({ match }: any) => (
       <EventBookingFormContainer
         eventID={match.params.id}
         eventServiceURL="http://localhost:8181"
-        bookingServiceURL="http://localhost:8282"
+        bookingServiceURL="http://localhost:8182"
       />
     );
 

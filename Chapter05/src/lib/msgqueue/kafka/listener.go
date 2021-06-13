@@ -11,8 +11,8 @@ import (
 
 	"github.com/Shopify/sarama"
 
-	"cloud-native-programming-with-golang/Chapter04/src/lib/helper/kafka"
-	"cloud-native-programming-with-golang/Chapter04/src/lib/msgqueue"
+	"cloud-native-programming-with-golang/Chapter05/src/lib/helper/kafka"
+	"cloud-native-programming-with-golang/Chapter05/src/lib/msgqueue"
 )
 
 type kafkaEventListener struct {

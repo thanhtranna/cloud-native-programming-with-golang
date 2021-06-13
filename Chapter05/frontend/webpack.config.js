@@ -1,79 +1,85 @@
-const path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
-
 module.exports = {
+    mode: 'development',
     entry: "./src/index.tsx",
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, 'dist'),
+        path: __dirname + "/dist",
     },
-
-    devServer: {
-        inline: false,
-        contentBase: "./dist",
-    },
-
     devtool: "source-map",
-
     resolve: {
-        extensions: [".ts", ".tsx", ".css", ".js"]
+        extensions: [".ts", ".tsx", ".css", ".js"],
     },
-
+    devServer: {
+        contentBase: './dist',
+    },
     module: {
-        // loaders: [
-        //     {
-        //         test: /\.tsc?$/,
-        //         loader: "awesome-typescript-loader"
-        //     }
-        // ],
-
-        rules: [
-            {
+        rules: [{
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
-                // loader: "ts-loader"
+                // loader: "awesome-typescript-loader"
+                loader: "ts-loader",
+                options: { reportFiles: ['src/**/*.{ts,tsx}', '!src/skip.ts'] }
             },
-            // {
-            //     test: /.jsx?$/,
-            //     loader: 'babel-loader',
-            //     query: {
-            //         presets: [['es2015', {}]]
-            //     }
-            // },
-            // {
-            //     test: /\.css$/,
-            //     loader: "style-loader!css-loader"
-            // },
-            // {
-            //     test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-            //     loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-            // },
-            // {
-            //     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-            //     loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-            // },
-            // {
-            //     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            //     loader: 'file-loader'
-            // },
-            // {
-            //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            //     loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-            // }
-            /*,
             {
-                test: /\.js$/,
-                enforce: "pre",
-                loader: "source-map-loader"
-            }*/
-        ]
+                test: /.jsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['es2015', 'react']
+                    },
+                },
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                ]
+            },
+            {
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'application/font-woff',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'application/octet-stream',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file-loader",
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/svg+xml',
+                        },
+                    },
+                ],
+            },
+        ],
     },
-    plugins: [
-        new CheckerPlugin()
-    ],
-
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    }
+        react: "React",
+        "react-dom": "ReactDOM",
+    },
 };

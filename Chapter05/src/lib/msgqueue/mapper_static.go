@@ -6,7 +6,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 
-	"cloud-native-programming-with-golang/Chapter04/src/contracts"
+	"cloud-native-programming-with-golang/Chapter05/src/contracts"
 )
 
 type StaticEventMapper struct{}

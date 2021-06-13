@@ -1,8 +1,8 @@
 package dblayer
 
 import (
-	"cloud-native-programming-with-golang/Chapter04/src/lib/persistence"
-	"cloud-native-programming-with-golang/Chapter04/src/lib/persistence/mongolayer"
+	"cloud-native-programming-with-golang/Chapter05/src/lib/persistence"
+	mongolayer "cloud-native-programming-with-golang/Chapter05/src/lib/persistence/mongolayer"
 )
 
 type DBTYPE string

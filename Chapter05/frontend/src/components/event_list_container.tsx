@@ -20,6 +20,8 @@ export class EventListContainer extends React.Component<
   constructor(p: EventListContainerProps) {
     super(p);
 
+    console.log('toi day roi ne!!!');
+
     this.state = {
       loading: true,
       events: [],

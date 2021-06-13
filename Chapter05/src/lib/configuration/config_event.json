@@ -1,7 +1,7 @@
 {
     "databasetype" : "mongodb",
     "dbconnection": "mongodb://127.0.0.1",
-    "restfulapi_endpoint": "localhost:8182",
+    "restfulapi_endpoint": "localhost:8181",
     "message_broker_type": "amqp",
     "amqp_message_broker": "amqp://admin:admin@localhost:5672",
     "kafka_message_brokers": [

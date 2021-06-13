@@ -74,7 +74,7 @@ func (mgoLayer *MongoDBLayer) FindBookingsForUser(id string) ([]persistence.Book
 	s := mgoLayer.getFreshSession()
 	defer s.Close()
 	u := persistence.User{}
-	err := s.DB(DB).C(USERS).FindId(bson.ObjectId(id)).One(&u)
+	err := s.DB(DB).C(USERS).FindId(bson.ObjectIdHex(id)).One(&u)
 	return u.Bookings, err
 }
 

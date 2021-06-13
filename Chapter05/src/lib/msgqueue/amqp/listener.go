@@ -7,8 +7,8 @@ import (
 
 	"github.com/streadway/amqp"
 
-	amqphelper "cloud-native-programming-with-golang/Chapter04/src/lib/helper/amqp"
-	"cloud-native-programming-with-golang/Chapter04/src/lib/msgqueue"
+	amqphelper "cloud-native-programming-with-golang/Chapter05/src/lib/helper/amqp"
+	"cloud-native-programming-with-golang/Chapter05/src/lib/msgqueue"
 )
 
 const eventNameHeader = "x-event-name"
