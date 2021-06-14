@@ -70,11 +70,11 @@ func (h *CreateBookingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 	msg := contracts.EventBookedEvent{
 		EventID: event.ID.Hex(),
-		UserID:  "someUserID",
+		UserID:  "60c62aa3835a5369db9ff78d",
 	}
 	h.eventEmitter.Emit(&msg)
 
-	h.database.AddBookingForUser("someUserID", booking)
+	h.database.AddBookingForUser("60c62aa3835a5369db9ff78d", booking)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)

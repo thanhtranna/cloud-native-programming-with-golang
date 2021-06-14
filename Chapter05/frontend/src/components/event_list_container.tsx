@@ -26,15 +26,21 @@ export class EventListContainer extends React.Component<
       loading: true,
       events: [],
     };
-
-    fetch(p.eventServiceURL + "/events", { method: "GET" })
-      .then<Event[]>((response) => response.json())
-      .then((events) => {
-        this.setState({
-          loading: false,
-          events: events,
-        });
+  }
+  
+  getData() {
+    fetch(this.props.eventServiceURL + "/events", { method: "GET" })
+    .then<Event[]>((response) => response.json())
+    .then((events) => {
+      this.setState({
+        loading: false,
+        events: events,
       });
+    });
+  }
+
+  componentDidMount() {
+    this.getData();
   }
 
   private handleEventBooked(e: Event) {
